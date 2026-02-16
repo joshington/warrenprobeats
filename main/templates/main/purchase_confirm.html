@@ -1,0 +1,56 @@
+
+
+
+
+{% extends 'main/base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-shopping-cart fa-4x text-primary mb-3"></i>
+                        <h3>Purchase {{ beat.title }}</h3>
+                        <p class="text-muted">Complete your purchase to download this beat</p>
+                    </div>
+                    
+                    <div class="beat-details mb-4 p-3 bg-light rounded">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Beat:</span>
+                            <strong>{{ beat.title }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Album:</span>
+                            <strong>{{ beat.album.title }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Genre:</span>
+                            <strong>{{ beat.album.genre }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Price:</span>
+                            <h4 class="text-success mb-0">${{ beat.price }}</h4>
+                        </div>
+                    </div>
+            <!-- Form submits to purch_download which will call process_payment -->
+                    <form method="POST" 
+                        class="mb-3"
+                        action="{% url 'main:purch_download' beat.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                            <i class="fas fa-credit-card me-2"></i> Proceed to Payment
+                        </button>
+                    </form>
+                    
+                    <a href="{% url 'main:detail' beat.album.id %}" 
+                       class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Album
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,468 @@
+
+
+{% extends 'main/base.html' %}
+{% block title %}{{ album.title }} - Premium Beats | BeatMarket Pro{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="container" data-aos="fade-up">
+    
+    <!-- Album Header -->
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main:index' %}"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Beats</a></li>
+                    <li class="breadcrumb-item active">{{ album.genre }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ album.title }}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+            <button class="btn btn-outline-primary me-2">
+                <i class="fas fa-share-alt me-1"></i> Share
+            </button>
+            <button class="btn btn-primary">
+                <i class="fas fa-shopping-cart me-1"></i> Add All to Cart
+            </button>
+        </div>
+    </div>
+    
+    <!-- Album Hero Section -->
+    <div class="row mb-5">
+        <div class="col-lg-4 mb-4" data-aos="fade-right">
+            <div class="album-hero-card card border-0 shadow-lg">
+                <img src="{{ album.cover_image.url }}" 
+                     class="card-img-top album-detail-cover" 
+                     alt="{{ album.title }}">
+                <div class="card-body text-center">
+                    <h2 class="card-title mb-3">{{ album.title }}</h2>
+                    <div class="album-meta mb-4">
+                        <span class="badge bg-primary me-2">{{ album.genre }}</span>
+                        <span class="text-muted">
+                            <i class="fas fa-user me-1"></i> {{ album.producer|default:"Professional Producer" }}
+                        </span>
+                    </div>
+                    
+                    <div class="album-stats mb-4">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Beats</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-number">1.5K</div>
+                                <div class="stat-label">Plays</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-number">89</div>
+                                <div class="stat-label">Sales</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="album-pricing mb-4">
+                        <h3 class="text-primary fw-bold mb-2">${{ album.total_price|default:"249.99" }}</h3>
+                        <p class="text-muted small">Complete album license</p>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success btn-lg fw-bold">
+                            <i class="fas fa-shopping-cart me-2"></i> Buy Full Album
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <i class="fas fa-play-circle me-2"></i> Play All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8" data-aos="fade-left">
+            <!-- Album Description -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">
+                        <i class="fas fa-info-circle me-2 text-primary"></i>About This Album
+                    </h4>
+                    <p class="card-text">
+                        {{ album.description|default:"Premium collection of professionally produced beats. Each track is mixed and mastered to industry standards, ready for your next hit." }}
+                    </p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-check-circle text-success me-2"></i>License Includes:</h6>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i> MP3 & WAV Files</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Trackout Stems</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Unlimited Streams</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Radio & TV Rights</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-tags text-warning me-2"></i>Tags:</h6>
+                            <div class="tags mt-2">
+                                <span class="badge bg-secondary me-2 mb-2">Premium</span>
+                                <span class="badge bg-secondary me-2 mb-2">Chart Ready</span>
+                                <span class="badge bg-secondary me-2 mb-2">Mix & Mastered</span>
+                                <span class="badge bg-secondary me-2 mb-2">Exclusive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producer Info -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://ui-avatars.com/api/?name={{ album.producer|default:'Producer' }}&background=6c63ff&color=fff&size=60" 
+                             class="rounded-circle me-3" 
+                             alt="Producer">
+                        <div>
+                            <h5 class="mb-1">{{ album.producer|default:"Professional Producer" }}</h5>
+                            <p class="text-muted mb-0">
+                                <i class="fas fa-star text-warning me-1"></i> 4.9 (247 reviews)
+                            </p>
+                        </div>
+                        <button class="btn btn-outline-primary ms-auto">
+                            <i class="fas fa-user-plus me-1"></i> Follow
+                        </button>
+                    </div>
+                    <p class="card-text text-muted">
+                        Award-winning producer with 10+ years of experience. Specializes in {{ album.genre }} and urban music production.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Beats List -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="page-title mb-4">
+                <i class="fas fa-music me-2"></i>🎵 Tracks in This Album
+                <small class="text-muted ms-2">({{ beats|length }} beats)</small>
+            </h3>
+        </div>
+    </div>
+    
+    <!-- Beats Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-beats mb-0">
+                            <thead>
+                                <tr class="bg-dark">
+                                    <th width="50" class="text-center">#</th>
+                                    <th>Track</th>
+                                    <th width="250">Preview</th>
+                                    <th width="120">BPM/Key</th>
+                                    <th width="100">Price</th>
+                                    <th width="150" class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for beat in beats %}
+                                <tr class="beat-row" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:50 }}">
+                                    <td class="text-center text-muted fw-bold">{{ forloop.counter }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="track-cover me-3">
+                                                <img src="{{ album.cover_image.url }}" 
+                                                     class="rounded" 
+                                                     width="40" 
+                                                     height="40" 
+                                                     alt="{{ beat.title }}">
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">{{ beat.title }}</h6>
+                                                <small class="text-muted">{{ album.genre }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="audio-player">
+                                            <audio controls preload="none" id="audio-{{ beat.id }}">
+                                                <source src="{{ beat.audio_file.url }}" type="audio/mpeg">
+                                            </audio>
+                                        <!--
+                                             <div class="player-controls d-flex align-items-center">
+                                                <button class="btn btn-sm btn-outline-primary play-btn me-2" 
+                                                        data-audio="audio-{{ beat.id }}">
+                                                    <i class="fas fa-play"></i>
+                                                </button>
+                                                <div class="progress flex-grow-1 me-2" style="height: 4px;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                                </div>
+                                                <small class="text-muted">1:30</small>
+                                            </div>
+                                        </div>
+                                        -->
+                                           
+                                    </td>
+                                    <td>
+                                        <div class="bpm-key">
+                                            <span class="badge bg-info me-1">{{ beat.bpm|default:"140" }} BPM</span>
+                                            <span class="badge bg-secondary">{{ beat.key|default:"C#m" }}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5 class="text-success fw-bold mb-0">${{ beat.price|default:"24.99" }}</h5>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button class="btn btn-outline-primary favorite-beat" 
+                                                    data-beat-id="{{ beat.id }}">
+                                                <i class="far fa-heart"></i>
+                                            </button>
+                                            <button class="btn btn-primary add-to-cart" 
+                                                data-beat-id="{{ beat.id }}"
+                                            >
+                                                <a href="{% url 'main:purch_download' beat.id %}" 
+                                                    style="color: white;text-decoration: none;">
+                                                    <i class="fas fa-cart-plus"></i> 
+                                                    Buy
+                                                </a>
+                                            </button>
+                                            
+                                            
+                                            <button class="btn btn-outline-success">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-5">
+                                        <div class="empty-beats">
+                                            <i class="fas fa-music fa-3x text-muted mb-3"></i>
+                                            <h5>No beats available in this album</h5>
+                                            <p class="text-muted">Check back later for new tracks</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Albums -->
+    <div class="row mt-5 pt-5">
+        <div class="col-12">
+            <h3 class="page-title mb-4">
+                <i class="fas fa-random me-2"></i>🔄 You Might Also Like
+            </h3>
+        </div>
+        <!-- Related albums will be dynamically loaded -->
+    </div>
+    
+</div>
+
+<style>
+    .album-hero-card {
+        background: rgba(30, 30, 30, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        overflow: hidden;
+    }
+    
+    .album-detail-cover {
+        height: 300px;
+        object-fit: cover;
+    }
+    
+    .album-stats .stat-number {
+        font-size: 24px;
+        font-weight: bold;
+        color: #6c63ff;
+    }
+    
+    .album-stats .stat-label {
+        font-size: 12px;
+        color: #aaa;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .table-beats {
+        background: rgba(30, 30, 30, 0.8);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .table-beats thead {
+        background: rgba(108, 99, 255, 0.1);
+    }
+    
+    .table-beats tbody tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .table-beats tbody tr:hover {
+        background: rgba(108, 99, 255, 0.05);
+        transform: translateX(5px);
+    }
+    
+    .audio-player .progress {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    
+    .audio-player .progress-bar {
+        background: linear-gradient(90deg, #6c63ff, #ff6b6b);
+        border-radius: 2px;
+        transition: width 0.1s linear;
+    }
+    
+    .play-btn.playing i {
+        content: "\f04c";
+    }
+    
+    .bpm-key .badge {
+        font-size: 11px;
+        padding: 4px 8px;
+        border-radius: 10px;
+    }
+    
+    .favorite-beat.active i {
+        color: #ff6b6b;
+    }
+    
+    .add-to-cart {
+        transition: all 0.3s ease;
+    }
+    
+    .add-to-cart:hover {
+        transform: scale(1.05);
+    }
+    
+    .beat-row {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+    // Audio player functionality
+    document.querySelectorAll('.play-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const audioId = this.getAttribute('data-audio');
+            const audio = document.getElementById(audioId);
+            const progressBar = this.closest('.player-controls').querySelector('.progress-bar');
+            
+            if (audio.paused) {
+                // Pause all other audio players
+                document.querySelectorAll('audio').forEach(a => {
+                    if (a !== audio) {
+                        a.pause();
+                        a.currentTime = 0;
+                        a.closest('.player-controls').querySelector('.play-btn i').className = 'fas fa-play';
+                        a.closest('.player-controls').querySelector('.progress-bar').style.width = '0%';
+                    }
+                });
+                
+                // Play current audio
+                audio.play();
+                this.innerHTML = '<i class="fas fa-pause"></i>';
+                
+                // Update progress bar
+                audio.addEventListener('timeupdate', function() {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    progressBar.style.width = progress + '%';
+                });
+            } else {
+                audio.pause();
+                this.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+    });
+    
+    // Favorite beat functionality
+    document.querySelectorAll('.favorite-beat').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas', 'text-danger');
+                this.classList.add('active');
+                
+                // Add animation
+                this.classList.add('animate__animated', 'animate__pulse');
+                setTimeout(() => {
+                    this.classList.remove('animate__animated', 'animate__pulse');
+                }, 500);
+            } else {
+                icon.classList.remove('fas', 'text-danger');
+                icon.classList.add('far');
+                this.classList.remove('active');
+            }
+        });
+    });
+    
+    // Add to cart functionality
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const beatId = this.getAttribute('data-beat-id');
+            
+            // Visual feedback
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check"></i> Added';
+            this.classList.remove('btn-primary');
+            this.classList.add('btn-success');
+            
+            // Update cart count
+            const cartCount = document.querySelector('.cart-count');
+            let count = parseInt(cartCount.textContent);
+            cartCount.textContent = count + 1;
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.classList.remove('btn-success');
+                this.classList.add('btn-primary');
+            }, 2000);
+            
+            // Here you would typically make an AJAX call to add to cart
+            console.log('Added beat ' + beatId + ' to cart');
+        });
+    });
+    
+    // Progress bar click to seek
+    document.querySelectorAll('.progress').forEach(progress => {
+        progress.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            const percentage = clickX / width;
+            
+            const audio = this.closest('.player-controls').querySelector('audio');
+            const progressBar = this.querySelector('.progress-bar');
+            
+            audio.currentTime = percentage * audio.duration;
+            progressBar.style.width = percentage * 100 + '%';
+        });
+    });
+</script>
+{% endblock %}
